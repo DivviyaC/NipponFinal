@@ -206,12 +206,7 @@ export default function RateAndReview({navigation, route}) {
                   'SIGNATURE' +
                   '_' +
                   moment().format('YYYYMMDDhhmmss');
-                //   if(FileProvider) {
-                //     FileProvider.getUriForFile('com.example.myapp.fileprovider', path)
-                //         .then((contentUri) => {
-                //             console.log('contentUri', contentUri);
-                //         });
-                // }
+              
                   setFileType('image/'+path.substring(path.lastIndexOf('.')+ 1))
                   setFileName(filename)
                 setFileData('file://'+path);
