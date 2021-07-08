@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
-import com.artirigo.fileprovider.RNFileProviderPackage;
 import codes.simen.IMEI.IMEI;
 import codes.simen.IMEI.IMEI;
 import com.rnfs.RNFSPackage;
