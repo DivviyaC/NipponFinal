@@ -5577,6 +5577,11 @@ react-native-fetch-blob@^0.10.8:
     base-64 "0.1.0"
     glob "7.0.6"
 
+react-native-file-provider@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-file-provider/-/react-native-file-provider-1.1.0.tgz#500d44f5254ea46ba1bbfbd72c064fcc20db762c"
+  integrity sha512-q7LfHen5wsJWXsWrB07DFQ8di17pT8ymBy24odEOWTXTJuRprxoq8HtV1onlaqNMugwsc/OZPY9lMe+SNk+oFg==
+
 react-native-fs@^2.18.0:
   version "2.18.0"
   resolved "https://registry.yarnpkg.com/react-native-fs/-/react-native-fs-2.18.0.tgz#987b99cc90518ef26663a8d60e62104694b41c21"

@@ -4,12 +4,13 @@ import Rating from 'react-native-easy-rating';
 import {Card} from 'react-native-paper';
 import Foundation from 'react-native-vector-icons/Foundation';
 import styles from '../css/RateAndReviewStyle';
-import RNFS from 'react-native-fs';
+import RNFS,{ DocumentDirectoryPath} from 'react-native-fs';
 import CustomRNSketchCanvas from '../Signature/CustomRNSketchCanvas';
 import Modal from 'react-native-modal';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import axios from 'axios';
 import moment from 'moment';
+
 
 const pencil = <Foundation name="clipboard-pencil" color="#4BB543" size={40} />;
 export default function RateAndReview({navigation, route}) {
@@ -47,22 +48,45 @@ export default function RateAndReview({navigation, route}) {
     });
   };
 
-  const postmethod = async () => {
+
+  const postmethod =  () => {
+    // fetch('https://nipponbackend.herokuapp.com/delivery', {
+    //   method: 'POST',
+    //   headers: new Headers({
+    //     'Content-Type': 'multipart/form-data', //Specifying the Content-Type
+    //   }),      
+    //   body: createFormData(),
+    // })
+    //   .then((data) => console.log( data.json()))
+
+    //   .then(() => {
+    //     console.log('upload succes');
+    //     // setTitle('Profile Photo');
+    //     // setAvatar({uri: response.image});
+    //   })
+    //   .catch((error) => {
+    //     console.log('upload error', error);
+        
+    //   });
     
-   await axios
+    axios
       .post(
-        'http://139.59.17.163:4040/order-delivery/updateByInvoiceNumber',
+      // 'http://10.0.2.2:2000/delivery',
+         'http://139.59.17.163:4040/order-delivery/updateByInvoiceNumber',
         createFormData()
       )
       .then(response => {
         console.log(JSON.stringify(response));
       })
       .catch(error => {
+        console.log(error)
         alert(error);
       });
   
-  handleFileDelete()
+   handleFileDelete()
   };
+
+  
 
   const createFormData = () => {
     const data = new FormData();
@@ -92,6 +116,7 @@ export default function RateAndReview({navigation, route}) {
   };
 
   const alertOnpress = () => {
+   
     postmethod();
     // handleFileDelete()
     setRefreshing(true);
@@ -99,6 +124,7 @@ export default function RateAndReview({navigation, route}) {
     navigation.navigate('OrdersList');
   }
 
+  
   return (
     <View style={styles.view}>
       <AwesomeAlert
@@ -153,9 +179,17 @@ export default function RateAndReview({navigation, route}) {
             onPathsChange={pathsCount => {
               setDragged(pathsCount);
             }}
-            
+            savePreference={() => {
+              return {
+                folder: 'RNSketchCanvas',
+                filename: String(Math.ceil(Math.random() * 100000000)),
+                transparent: false,
+                imageType: 'png'
+              }
+            }}
             onSketchSaved={(success, path) => {
               
+             
               setFilePath(path);
               if (dragged == 0) {
                 Alert.alert('Alert', 'Enter Signature');
@@ -164,6 +198,7 @@ export default function RateAndReview({navigation, route}) {
                 console.log(path);
                 setFilePath(path)
                 setShowAlert(true);
+               
                 RNFS.readFile(path, 'base64').then(result => {
                   let filename =
                   InvoiceNo +
@@ -171,10 +206,18 @@ export default function RateAndReview({navigation, route}) {
                   'SIGNATURE' +
                   '_' +
                   moment().format('YYYYMMDDhhmmss');
-                  setFileType('image/png')
+                //   if(FileProvider) {
+                //     FileProvider.getUriForFile('com.example.myapp.fileprovider', path)
+                //         .then((contentUri) => {
+                //             console.log('contentUri', contentUri);
+                //         });
+                // }
+                  setFileType('image/'+path.substring(path.lastIndexOf('.')+ 1))
                   setFileName(filename)
                 setFileData('file://'+path);
+                console.log(path.substring(path.lastIndexOf('.')+ 1))
                 });
+                
               }
             }}
             saveComponent={

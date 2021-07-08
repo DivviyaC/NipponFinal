@@ -31,23 +31,21 @@ export default function Undelivered({navigation, route}) {
   );
   const [modalVisible, setModalVisible] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-  const [fileName, setFileName] = useState();
-  const [fileData, setFileData] = useState();
-  const [filePath, setFilePath] = useState();
+  const [fileName, setFileName] = useState("");
+  const [fileData, setFileData] = useState("");
+  const [filePath, setFilePath] = useState("");
   const [fileType, setFileType] = useState();
   const [cancelledData, setCancelledData] = useState();
 
   const createFormData = () => {
     const data = new FormData();
-  
+    if(Remarks=="Damaged" || Remarks=="Closed") {
     data.append('file', {
       name: fileName,
       type: fileType,
       uri:fileData
     });
-  
-
-
+  }
 
      data.append(
       'jsonInputData',
@@ -59,13 +57,19 @@ export default function Undelivered({navigation, route}) {
         invoiceno: InvoiceNo,
       })
      )
+    
+     
+   
   
+   
     return data;
+    
+   
   };
   
   const undeliveredPostmethod = async () => {
   
-    
+  
 
     await axios.post( 'http://139.59.17.163:4040/order-delivery/updateByInvoiceNumber',
      createFormData()
@@ -75,7 +79,8 @@ export default function Undelivered({navigation, route}) {
          .catch(error => {
            alert(error);
          });
-
+        
+        
     
   };
 
@@ -108,9 +113,7 @@ export default function Undelivered({navigation, route}) {
       .catch(e => e);
   };
 
-  const submit = () => {
-    setShowAlert(true);
-  };
+ 
 
   const otherfunc = () => {
     setRemarks('Others');
